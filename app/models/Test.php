@@ -1,8 +1,6 @@
 <?php
 
     namespace app\models;
-    
-    //include "app/models/modelo.php";
 
     class Test extends ConexionBD {
 
