@@ -2,7 +2,7 @@
 
     namespace app\models;
 
-    class Test extends ConexionBD {
+    class Test extends db {
 
         public function getTasks(){
             $sql = "SELECT * FROM tasks";

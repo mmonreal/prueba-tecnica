@@ -16,8 +16,11 @@
 <body>
 
   <?php
-    $test = new app\models\Test();
-    $test->getTasks();
+    $test = new app\views\VistaTareas();
+    echo $test->muestraTablaTareas();
+
+    //$testt = new app\controllers\ControllerTareas();
+    //$testt->setTarea("esta es una nueva tarea");
   ?>
 
 </body>
