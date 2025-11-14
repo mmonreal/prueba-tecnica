@@ -6,11 +6,17 @@
      * Clase modelo que funciona se encarga de hacer las consultas directamente con la base de datos.
     */
     class ModeloBD extends db{
+        
+        protected $pdo;
+
+        public function __construct() {
+            $this->pdo = $this->conectar(); // guardar la misma conexión
+        }
 
         /*Funcion para obtener todas las tareas de la base de datos*/
 		protected function getTareas(){
             $sql = "SELECT * FROM tasks";
-            $stmt = $this->conectar()->prepare($sql);
+            $stmt = $this->pdo->prepare($sql);
             $stmt->execute();
 
             $resultado = $stmt->fetchAll();
@@ -27,9 +33,18 @@
             $date = new DateTime('now');
             $formattedTimestamp = $date->format('Y-m-d H:i:s');
             
-            $sql = "INSERT INTO tasks(id, task_name,created_at) VALUES (?,?,?)";
-            $stmt = $this->conectar()->prepare($sql);
-            $stmt->execute([null,$tarea,$formattedTimestamp]);
+            $sql = "INSERT INTO tasks(task_name,created_at) VALUES (?,?)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$tarea,$formattedTimestamp]);
+            
+            // Guardamos la tarea y regresamos los datos
+            $id = $this->pdo->lastInsertId();
+
+            return [
+                'id' => $id,
+                'task_name' => $tarea,
+                'created_at' => $formattedTimestamp
+            ];
 		}
 
         /** Funcion para eliminar una tarea
@@ -38,7 +53,7 @@
         */
 		public function eliminarTarea($id){
             $sql = "DELETE FROM tasks WHERE id = ?";
-            $stmt = $this->conectar()->prepare($sql);
+            $stmt = $this->pdo->prepare($sql);
             return $stmt->execute([$id]);
 		}
 
