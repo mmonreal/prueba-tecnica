@@ -1,6 +1,6 @@
 <?php
 
-    /**
+/**
  * Autoloader de clases.
  *
  * Permitiendo cargar automáticamente las clases sin necesidad de usar

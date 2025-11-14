@@ -15,8 +15,6 @@ class VistaTareas extends ModeloBD {
             return "<p>No hay tareas registradas.</p>";
         }
 
-        
-        $baseUrl = "/tareas"; 
 
         $tabla = <<<HTML
         <table border="1" cellpadding="5" cellspacing="0">
@@ -36,18 +34,14 @@ class VistaTareas extends ModeloBD {
             $nombre = htmlspecialchars($t['task_name']);
             $fecha = htmlspecialchars($t['created_at']);
 
-            // Editar y eliminar
-            $editar = "{$baseUrl}/editar?id={$id}";
-            $eliminar = "{$baseUrl}/eliminar?id={$id}";
-
             $tabla .= <<<HTML
-                <tr>
+                <tr data-id="{$id}">
                     
                     <td>{$id}</td>
-                    <td>{$nombre}</td>
+                    <td class="col-nombre">{$nombre}</td>
                     <td>{$fecha}</td>
                     <td>
-                        <a href="{$editar}" style="color: blue; text-decoration: none;">Editar</a> |
+                        <a href="#" class="boton-editar" data-id="{$id}" style="color: blue; text-decoration: none;">Editar</a> |
                         <a href="#" class="boton-eliminar"  data-id="{$id}" style="color: red; text-decoration: none;">Eliminar</a>
                     </td>
                 </tr>

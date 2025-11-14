@@ -16,7 +16,7 @@ class add {
             <!-- pop up  -->
             <div id="popUpAgregar" class="popUp">
                 <div class="popUp-contenido">
-                    <span id="cerrarpopUp" class="cerrar">x</span>
+                    <span id="cerrarAgregar" class="cerrar">x</span>
                     <h2>Agregar nueva tarea</h2>
 
                     <form id="formAgregar">
