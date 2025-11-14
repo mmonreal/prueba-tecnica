@@ -4,6 +4,10 @@ use app\models\ModeloBD;
 
 class VistaTareas extends ModeloBD {
 
+    /**
+     * Metodo que regresa una tabla con todas las tareas
+     * @return Tabla de tareas
+     */
     public function muestraTablaTareas() {
         $tareas = $this->getTareas();
 
@@ -38,13 +42,13 @@ class VistaTareas extends ModeloBD {
 
             $tabla .= <<<HTML
                 <tr>
+                    
                     <td>{$id}</td>
                     <td>{$nombre}</td>
                     <td>{$fecha}</td>
                     <td>
                         <a href="{$editar}" style="color: blue; text-decoration: none;">Editar</a> |
-                        <a href="{$eliminar}" style="color: red; text-decoration: none;"
-                           onclick="return confirm('¿Seguro de eliminar esta tarea?');">Eliminar</a>
+                        <a href="#" class="boton-eliminar"  data-id="{$id}" style="color: red; text-decoration: none;">Eliminar</a>
                     </td>
                 </tr>
             HTML;

@@ -3,8 +3,8 @@
     use \DateTime;
 
     /**
-     * Clase que gestiona el modelo del proyecto
-     */
+     * Clase modelo que funciona se encarga de hacer las consultas directamente con la base de datos.
+    */
     class ModeloBD extends db{
 
         /*Funcion para obtener todas las tareas de la base de datos*/
@@ -18,7 +18,9 @@
             return $resultado;
 		}
 
-        /*Funcion para modificar agregar una tarea*/
+        /** Funcion para agregar una tarea
+        *   @param  string $tarea Descripcion de la tarea
+        */
 		public function setTarea($tarea){
             //Ajustamos la hora a la de la Ciudad de Mexico
             date_default_timezone_set('America/Mexico_City');
@@ -28,6 +30,16 @@
             $sql = "INSERT INTO tasks(id, task_name,created_at) VALUES (?,?,?)";
             $stmt = $this->conectar()->prepare($sql);
             $stmt->execute([null,$tarea,$formattedTimestamp]);
+		}
+
+        /** Funcion para eliminar una tarea
+        * @param  int $id ID de la tarea a eliminar
+        * @return bool True si la tarea se elimino, false en otro caso
+        */
+		public function eliminarTarea($id){
+            $sql = "DELETE FROM tasks WHERE id = ?";
+            $stmt = $this->conectar()->prepare($sql);
+            return $stmt->execute([$id]);
 		}
 
     }
