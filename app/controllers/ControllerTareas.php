@@ -54,4 +54,23 @@ class ControllerTareas extends ModeloBD {
       echo json_encode(['ok' => $resultado]);
    }
 
+   /*Funcion del controlador para editar una tarea de la base de datos*/
+   public function editarAjax() {
+      header('Content-Type: application/json');
+
+      //Obtenemos el id de la tarea a eliminar
+      $id = $_POST['id'] ?? null;
+      $descripcion = $_POST['descripcion'] ?? '';
+
+      //regresasmos un json con el resultado de la consulta y un mensaje de error en caso de tener alguno
+      if (!$id) {
+         echo json_encode(['ok' => false, 'error' => 'ID no recibido']);
+         return;
+      }
+
+      $resultado = $this->editarTarea($id,$descripcion);
+
+      echo json_encode(['ok' => $resultado]);
+   }
+
 }

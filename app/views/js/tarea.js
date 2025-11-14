@@ -1,20 +1,39 @@
-// Abrir popUp
+const pAgregar = document.getElementById("popUpAgregar");
+const pEditar  = document.getElementById("popUpEditar");
+
+// Abrir popup agregar tarea
 document.getElementById("botonAbrirPopUp").onclick = function() {
-    document.getElementById("popUpAgregar").style.display = "block";
+    pAgregar.style.display = "block"; 
 };
 
-// Cerrar popUp
-document.getElementById("cerrarpopUp").onclick = function() {
-    document.getElementById("popUpAgregar").style.display = "none";
+// Cerrar popup agregar
+document.getElementById("cerrarAgregar").onclick = function() {
+    pAgregar.style.display = "none";
+    $("#formAgregar textarea").val("");
 };
 
-// Cerrar si clickea fuera del popUp
+// Cerrar popup editar
+document.getElementById("cerrarEditar").onclick = function() {
+    pEditar.style.display = "none";
+    $("#formEditar textarea").val("");
+};
+
+// Cerrar si clickea fuera
 window.onclick = function(event) {
-    const popUp = document.getElementById("popUpAgregar");
-    if (event.target === popUp) {
-        popUpAgregar.style.display = "none";
+
+    // Popup Agregar
+    if (event.target === pAgregar) {
+        pAgregar.style.display = "none";
+        $("#formAgregar textarea").val("");
+    }
+
+    // Popup Editar
+    if (event.target === pEditar) {
+        pEditar.style.display = "none";
+        $("#formEditar textarea").val("");
     }
 };
+
 
 /* Boton para agregar una tarea implementando ajax*/
 $(document).on("submit", "#formAgregar", function(e) {
@@ -46,7 +65,7 @@ $(document).on("submit", "#formAgregar", function(e) {
                         <td>${resp.task_name}</td>
                         <td>${resp.created_at}</td>
                         <td>
-                            <a href="{$editar}" style="color: blue; text-decoration: none;">Editar</a> |
+                            <a href="#" class="boton-editar" data-id="${resp.id}" style="color: blue; text-decoration: none;">Editar</a> |
                             <a href="#" class="boton-eliminar" data-id="${resp.id}" style="color:red; text-decoration:none;">Eliminar</a>
                         </td>
                     </tr>
@@ -96,6 +115,61 @@ $(document).ready(function() {
             }
         });
 
+    });
+
+});
+
+
+/** Boton para editar una tarea ejecutando el pop up
+ * Guardamos la descripcion y el ID de la tarea
+*/
+$(document).ready(function() {
+
+    $(document).on("click", ".boton-editar", function(e) {
+        
+        e.preventDefault(); //evitar recarga de pagina
+        
+        //Id de la tarea a modificar y su descripcion
+        const id = $(this).data("id");
+        const descripcion  = $(this).closest("tr").find("td:nth-child(2)").text();
+
+        console.log(descripcion)
+
+        // Llenar popup
+        $("#editarId").val(id);
+        $("#editarDescripcion").val(descripcion);
+
+        // Mostrar popup
+        $("#popUpEditar").css("display", "block");
+
+    });
+
+    
+     /* Boton para editar una tarea implementando ajax*/
+    $("#formEditar").submit(function(e){
+        e.preventDefault();
+
+        const id = $("#editarId").val();
+        const descripcion = $("#editarDescripcion").val();
+
+        $.ajax({
+            url: "/prueba-tecnica/app/views/js/router.php?accion=editarAjax",
+            method: "POST",
+            data: { id: id, descripcion: descripcion },
+            success: function(resp){
+                if(resp.ok){
+                    // Actualizar fila en la tabla
+                    const fila = $(`tr[data-id='${id}']`);
+                    fila.find(".col-nombre").text(descripcion);
+                    $("#popUpEditar").hide();
+                } else {
+                    alert("Error al editar la tarea");
+                }
+            },
+            error: function(){
+                alert("Error de conexión con el servidor");
+            }
+        });
     });
 
 });

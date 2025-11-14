@@ -17,6 +17,7 @@
 .popUp-contenido {
     background: #fff;
     margin: auto;
+    /* margin-top: 1%; */
     padding: 2rem;
     width: 30%;
 }
@@ -30,5 +31,6 @@
 textarea[name="descripcion"] {
     width: 100%;
     min-height: 6rem;  
-    max-height: 20rem; 
+    max-height: 20rem;
+    font-size: 1rem;
 }

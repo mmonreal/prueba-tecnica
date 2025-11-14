@@ -21,6 +21,11 @@ switch ($accion) {
         $controller->agregarAjax();
         exit;
         break;
+
+    case 'editarAjax':
+        $controller->editarAjax();
+        exit;
+        break;
         
     default:
         $vista = new app\views\VistaTareas();

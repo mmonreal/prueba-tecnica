@@ -1,5 +1,4 @@
 <?php
-    //echo "Heola MUNDO como estan";
     require_once "./autoload.php"
 ?>
 
@@ -23,8 +22,13 @@
     $test1 = new app\views\add();
     echo $test1->botonAgregarTarea();
 
+    $testt = new app\views\edit();
+    echo $testt->botonEditarTarea();
+
     $test = new app\views\VistaTareas();
     echo $test->muestraTablaTareas();
+
+    
 
     //$testt = new app\controllers\ControllerTareas();
     //$testt->setTarea("esta es una nueva tarea");

@@ -57,4 +57,15 @@
             return $stmt->execute([$id]);
 		}
 
+        /** Funcion para editar una tarea
+        * @param  int $id ID de la tarea a modificar
+        * @param  string $descripcion nueva descripcion de la tarea
+        * @return bool True si la tarea se actualizo, false en otro caso
+        */
+		public function editarTarea($id, $descripcion){
+            $sql = "UPDATE tasks SET task_name = ? WHERE id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([ $descripcion, $id]);
+		}
+
     }
