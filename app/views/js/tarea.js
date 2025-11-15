@@ -55,22 +55,27 @@ $(document).on("submit", "#formAgregar", function(e) {
                 // Cerrar el popup
                 $("#popUpAgregar").hide();
 
-                // Limpiamos el texto texto
+                // Limpiamos el texto
                 $("#formAgregar textarea").val("");
+
+                $("#tabla-tareas").css("display", "table");
 
                 // Agregar la nueva fila a la tabla
                 const nuevaFila = `
                     <tr data-id="${resp.id}">
                         <td>${resp.id}</td>
-                        <td>${resp.task_name}</td>
+                        <td class="col-nombre">${resp.task_name}</td>
                         <td>${resp.created_at}</td>
                         <td>
                             <a href="#" class="boton-editar" data-id="${resp.id}" style="color: blue; text-decoration: none;">Editar</a> |
-                            <a href="#" class="boton-eliminar" data-id="${resp.id}" style="color:red; text-decoration:none;">Eliminar</a>
+                            <a href="#" class="boton-eliminar" data-id="${resp.id}" style="color:red; text-decoration: none;">Eliminar</a>
                         </td>
                     </tr>
                 `;
-                $("table tbody").append(nuevaFila);
+                
+                $("#mensaje-vacio").hide();  
+                $("#tabla-tareas").css("display", "table"); 
+                $("#tabla-tareas tbody").append(nuevaFila);
                 
             } else {
                 alert("Error al agregar la tarea");
@@ -106,6 +111,17 @@ $(document).ready(function() {
             success: function(resp) {
                 if (resp.ok) {
                     fila.remove();
+
+                    if ($("#tabla-tareas tbody tr").length === 0) {
+                        $("#tabla-tareas").css("display","none");
+                        $("#mensaje-vacio").show();
+                    }
+
+                    // Si ya no hay filas en la tabla
+                    if ($("#tabla-tareas tbody tr").length === 0) {
+                        $("#mensaje-vacio").show();
+                    }
+
                 } else {
                     alert("Error al eliminar la tarea");
                 }
@@ -133,7 +149,7 @@ $(document).ready(function() {
         const id = $(this).data("id");
         const descripcion  = $(this).closest("tr").find("td:nth-child(2)").text();
 
-        console.log(descripcion)
+        //console.log(descripcion)
 
         // Llenar popup
         $("#editarId").val(id);

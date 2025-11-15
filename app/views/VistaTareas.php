@@ -11,13 +11,21 @@ class VistaTareas extends ModeloBD {
     public function muestraTablaTareas() {
         $tareas = $this->getTareas();
 
-        if (empty($tareas)) {
-            return "<p>No hay tareas registradas.</p>";
-        }
+        $tablaStyle = empty($tareas) ? "display:none;" : "display:table;";
+
+        $mensajeOculto = empty($tareas) ? "display:block;" : "display:none;";
+        
 
 
         $tabla = <<<HTML
-        <table border="1" cellpadding="5" cellspacing="0">
+        
+        <p id="mensaje-vacio" style="{$mensajeOculto}">No hay tareas registradas.</p>
+
+        <!-- <tr id="mensaje-vacio">
+            <p style="display:none;">No hay tareas registradas.</p>
+        </tr> -->
+        
+        <table id="tabla-tareas" border="1" cellpadding="5" cellspacing="0" style="{$tablaStyle}">
             <thead>
                 <tr>
                     <th>ID</th>
